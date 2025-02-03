@@ -1,5 +1,6 @@
 ﻿using MeetingManagement.Application.Services;
 using MeetingManagement.Domain.Entities;
+using MeetingManagement.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MeetingManagement.API.Controllers;
@@ -20,8 +21,18 @@ public class MeetingController(MeetingService meetingService) : ControllerBase
         Ok(await meetingService.GetMeetings());
 
     [HttpPut("cancel/{id}")]
-    public async Task<IActionResult> CancelMeeting(int id) =>
-        Ok(await meetingService.CancelMeeting(id));
+    public async Task<IActionResult> CancelMeeting(int id)
+    {
+        var result = await meetingService.CancelMeeting(id);
+
+        return result switch
+        {
+            MeetingCancellationResult.Success => Ok("Meeting canceled successfully."),
+            MeetingCancellationResult.NotFound => NotFound("Meeting not found."),
+            MeetingCancellationResult.AlreadyStarted => BadRequest("Cannot cancel a meeting that has already started."),
+            _ => BadRequest("An unknown error occurred.")
+        };
+    }
 
     [HttpPut("report/{id}")]
     public async Task<IActionResult> AddReport(int id, [FromBody] string report) =>

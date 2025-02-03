@@ -1,4 +1,5 @@
 ﻿using MeetingManagement.Domain.Entities;
+using MeetingManagement.Domain.Enums;
 using MeetingManagement.Domain.Interfaces;
 
 namespace MeetingManagement.Application.Services;
@@ -22,7 +23,7 @@ public class MeetingService
         return await _meetingRepository.GetMeetings();
     }
 
-    public async Task<bool> CancelMeeting(int id)
+    public async Task<MeetingCancellationResult> CancelMeeting(int id)
     {
         return await _meetingRepository.CancelMeeting(id);
     }

@@ -1,4 +1,5 @@
 ﻿using MeetingManagement.Domain.Entities;
+using MeetingManagement.Domain.Enums;
 using MeetingManagement.Domain.Interfaces;
 using MeetingManagement.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -23,16 +24,23 @@ public class MeetingRepository(AppDbContext context) : IMeetingRepository
     }
 
     public async Task<List<Meeting>> GetMeetings() => 
-        await context.Meetings.Where(m => !m.IsCanceled).ToListAsync();
+        await context.Meetings.Where(m => !m.IsCanceled)
+            .Include(a => a.Participants)
+            .ToListAsync();
 
-    public async Task<bool> CancelMeeting(int id)
+    public async Task<MeetingCancellationResult> CancelMeeting(int id)
     {
         var meeting = await context.Meetings.FindAsync(id);
-        if (meeting == null) return false;
+        if (meeting == null) return MeetingCancellationResult.NotFound;
+
+        if (meeting.StartTime <= DateTime.UtcNow)
+        {
+            return MeetingCancellationResult.AlreadyStarted;
+        }
 
         meeting.IsCanceled = true;
         await context.SaveChangesAsync();
-        return true;
+        return MeetingCancellationResult.Success;
     }
 
     public async Task<bool> AddMeetingReport(int id, string report)

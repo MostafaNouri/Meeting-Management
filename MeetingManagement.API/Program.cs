@@ -26,11 +26,11 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Seed data
-// using (var scope = app.Services.CreateScope())
-// {
-//     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-//     SeedData.Initialize(context);
-// }
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    SeedData.Initialize(context);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

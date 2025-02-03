@@ -8,6 +8,6 @@ public class Meeting
     public DateTime EndTime { get; set; }
     public string Room { get; set; }
     public List<Participant> Participants { get; set; } = new();
-    public string Report { get; set; }
+    public string? Report { get; set; }
     public bool IsCanceled { get; set; } = false;
 }
