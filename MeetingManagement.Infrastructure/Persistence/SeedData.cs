@@ -14,26 +14,26 @@ public class SeedData
         {
             context.Meetings.Add(new Meeting
             {
-                Title = "Project Kickoff Meeting",
+                Title = "Dotin Project Meeting",
                 StartTime = DateTime.UtcNow.AddHours(2),
                 EndTime = DateTime.UtcNow.AddHours(3),
                 Room = "Conference Room A",
                 Participants = new List<Participant>
                 {
-                    new() { Name = "John Doe", Email = "john@example.com", PhoneNumber = "1234567890" },
-                    new() { Name = "Jane Smith", Email = "jane@example.com", PhoneNumber = "0987654321" }
+                    new() { Name = "Mostafa Nouri", Email = "mostafa@example.com", PhoneNumber = "09362222222" },
+                    new() { Name = "Sajjad Abbasi", Email = "sajjad@example.com", PhoneNumber = "09362222223" },
                 }
             });
 
             context.Meetings.Add(new Meeting
             {
-                Title = "Weekly Team Sync",
+                Title = "Daily Report Meeting",
                 StartTime = DateTime.UtcNow.AddHours(4),
                 EndTime = DateTime.UtcNow.AddHours(5),
                 Room = "Conference Room B",
                 Participants = new List<Participant>
                 {
-                    new() { Name = "Alice Johnson", Email = "alice@example.com", PhoneNumber = "1112223333" }
+                    new() { Name = "Sasan Arham", Email = "sasan@example.com", PhoneNumber = "09192503450" }
                 }
             });
 
