@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetingManagement.Domain", "MeetingManagement.Domain\MeetingManagement.Domain.csproj", "{F4110143-0775-4493-ADB5-269BEFAD82D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetingManagement.Application", "MeetingManagement.Application\MeetingManagement.Application.csproj", "{71501391-F779-4E8E-9E7F-71E76F184829}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetingManagement.Infrastructure", "MeetingManagement.Infrastructure\MeetingManagement.Infrastructure.csproj", "{086D399B-73DF-4354-A0F5-2C0289584598}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetingManagement.API", "MeetingManagement.API\MeetingManagement.API.csproj", "{43820A16-F53C-48D2-AEA3-F9B360B750CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F4110143-0775-4493-ADB5-269BEFAD82D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4110143-0775-4493-ADB5-269BEFAD82D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4110143-0775-4493-ADB5-269BEFAD82D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4110143-0775-4493-ADB5-269BEFAD82D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71501391-F779-4E8E-9E7F-71E76F184829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71501391-F779-4E8E-9E7F-71E76F184829}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71501391-F779-4E8E-9E7F-71E76F184829}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71501391-F779-4E8E-9E7F-71E76F184829}.Release|Any CPU.Build.0 = Release|Any CPU
+		{086D399B-73DF-4354-A0F5-2C0289584598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{086D399B-73DF-4354-A0F5-2C0289584598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{086D399B-73DF-4354-A0F5-2C0289584598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{086D399B-73DF-4354-A0F5-2C0289584598}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43820A16-F53C-48D2-AEA3-F9B360B750CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43820A16-F53C-48D2-AEA3-F9B360B750CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43820A16-F53C-48D2-AEA3-F9B360B750CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43820A16-F53C-48D2-AEA3-F9B360B750CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
