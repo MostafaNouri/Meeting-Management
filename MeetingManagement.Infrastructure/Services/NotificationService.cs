@@ -1,42 +1,40 @@
-﻿using MeetingManagement.Domain.Interfaces;
-using MeetingManagement.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using MeetingManagement.Application.Interfaces;
+using MeetingManagement.Domain.DTOs;
+using MeetingManagement.Domain.Enums;
+using MeetingManagement.Infrastructure.Interfaces;
+using MeetingManagement.Infrastructure.Interfaces.Services;
 
 namespace MeetingManagement.Infrastructure.Services;
 
-public class NotificationService(IServiceScopeFactory scopeFactory, INotificationService notificationService)
-    : BackgroundService
+public class NotificationService : INotificationService
 {
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    private readonly Dictionary<ContactMethodType, INotificationClient> _strategies;
+
+    public NotificationService(IEnumerable<INotificationClient> strategies)
     {
-        while (!stoppingToken.IsCancellationRequested)
+        _strategies = strategies.ToDictionary(s => s.MethodType);
+    }
+
+    public async Task SendBulkNotificationsAsync(IEnumerable<NotificationDto> notifications)
+    {
+        var parallelOptions = new ParallelOptions
         {
-            using var scope = scopeFactory.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-            var upcomingMeetings = await context.Meetings
-                .Where(m => !m.IsCanceled && 
-                            m.StartTime > DateTime.UtcNow && 
-                            m.StartTime <= DateTime.UtcNow.AddHours(2))
-                .Include(m => m.Participants)
-                .ToListAsync(stoppingToken);
-
-            foreach (var meeting in upcomingMeetings)
+            MaxDegreeOfParallelism = Environment.ProcessorCount * 2
+        };
+        
+        await Parallel.ForEachAsync(notifications, parallelOptions, async (model, _) =>
+        {
+            foreach (var contactMethod in model.ContactMethods)
             {
-                foreach (var participant in meeting.Participants)
+                if (_strategies.TryGetValue(contactMethod.Type, out var strategy))
                 {
-                    await notificationService.SendEmailAsync(participant.Email, 
-                        $"Reminder: Meeting '{meeting.Title}'", 
-                        $"Your meeting '{meeting.Title}' is scheduled at {meeting.StartTime}.");
-                        
-                    await notificationService.SendSmsAsync(participant.PhoneNumber, 
-                        $"Reminder: Your meeting '{meeting.Title}' is at {meeting.StartTime}.");
+                    await strategy.SendNotificationAsync(
+                        model.RecipientName,
+                        model.Message,
+                        contactMethod.Value
+                    );
                 }
             }
-            
-            await Task.Delay(TimeSpan.FromMinutes(30), stoppingToken);
-        }
+        });
     }
 }

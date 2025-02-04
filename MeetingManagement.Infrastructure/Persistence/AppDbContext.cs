@@ -7,6 +7,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 {
     public DbSet<Meeting> Meetings { get; set; }
     public DbSet<Participant> Participants { get; set; }
+    public DbSet<ScheduledJob> ScheduledJobs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -14,5 +15,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .HasMany(m => m.Participants)
             .WithOne()
             .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Participant>()
+            .HasMany(m => m.ContactMethods)
+            .WithOne()
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<ScheduledJob>();
     }
 }

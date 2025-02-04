@@ -1,4 +1,5 @@
 ﻿using MeetingManagement.Domain.Entities;
+using MeetingManagement.Domain.Enums;
 
 namespace MeetingManagement.Infrastructure.Persistence;
 
@@ -20,24 +21,69 @@ public class SeedData
                 Room = "Conference Room A",
                 Participants = new List<Participant>
                 {
-                    new() { Name = "Mostafa Nouri", Email = "mostafa@example.com", PhoneNumber = "09362222222" },
-                    new() { Name = "Sajjad Abbasi", Email = "sajjad@example.com", PhoneNumber = "09362222223" },
+                    new()
+                    {
+                        Name = "Mostafa Nouri", ContactMethods =
+                        [
+                            new ContactMethod()
+                            {
+                                Type = ContactMethodType.Email,
+                                Value = "mostafa@xample.com"
+                            },
+                            new ContactMethod()
+                            {
+                                Type = ContactMethodType.SMS,
+                                Value = "09362222222"
+                            }
+                        ]
+                    },
+                    new()
+                    {
+                        Name = "Sajjad Abbasi", ContactMethods =
+                        [
+                            new ContactMethod
+                            {
+                                Type = ContactMethodType.Email,
+                                Value = "sajjad@example.com"
+                            },
+                            new ContactMethod
+                            {
+                                Type = ContactMethodType.SMS,
+                                Value = "09362222223"
+                            }
+                        ]
+                    }
                 }
             });
-
-            context.Meetings.Add(new Meeting
-            {
-                Title = "Daily Report Meeting",
-                StartTime = DateTime.UtcNow.AddHours(4),
-                EndTime = DateTime.UtcNow.AddHours(5),
-                Room = "Conference Room B",
-                Participants = new List<Participant>
-                {
-                    new() { Name = "Sasan Arham", Email = "sasan@example.com", PhoneNumber = "09192503450" }
-                }
-            });
-
-            context.SaveChanges();
         }
+
+        context.Meetings.Add(new Meeting
+        {
+            Title = "Daily Report Meeting",
+            StartTime = DateTime.UtcNow.AddHours(4),
+            EndTime = DateTime.UtcNow.AddHours(5),
+            Room = "Conference Room B",
+            Participants = new List<Participant>
+            {
+                new()
+                {
+                    Name = "Sasan Arham", ContactMethods =
+                    [
+                        new ContactMethod
+                        {
+                            Type = ContactMethodType.Email,
+                            Value = "sasan@example.com"
+                        },
+                        new ContactMethod
+                        {
+                            Type = ContactMethodType.SMS,
+                            Value = "09192503450"
+                        }
+                    ]
+                }
+            }
+        });
+
+        context.SaveChanges();
     }
 }
